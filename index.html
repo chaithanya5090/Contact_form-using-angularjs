@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+	<title>App</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style type="text/css">
+		table{
+			border-collapse: collapse;
+		}
+		tr,th,td{
+			border: 2px solid black;
+		}
+	</style>
+</head>
+<body ng-controller="myctrl">
+
+<div>
+	<h1>Using Angular JS</h1>
+	  <table style="padding:10px;border:2px solid red">
+	    <thead>
+		      <tr style="border:2px solid black" >
+			      <th>Sno</th>
+			      <th>FirstName</th>
+			      <th>LastName</th>
+			      <th>Email</th>
+			      <th>PhoneNumber</th>
+		      </tr>
+	    </thead>
+	    <tbody>
+	      <tr ng-repeat="contact in contacts">
+		       
+		        <td>{{$index+1}}</td>
+		        <td>{{contact.FNames}}</td>
+		        <td>{{contact.LNames}}</td>
+		        <td>{{contact.Email}}</td>
+		        <td>{{contact.phone}}</td>
+		        <td><button type="button" ng-click="edit($index)">Edit</button> | <button type="button" ng-click="delete($index)">Delete</button></td>
+		  </tr>         
+    </tbody>
+  </table>
+<br/>
+<br/>
+  <form>
+  	 <table>
+	  	 <tr>
+	  	 	<td>FName</td>
+	  	 	<td><input type="text" ng-model="user.FNames"/></td>
+	  	 </tr>
+	  	 <tr>
+	  	 	<td>LName</td>
+  	 		<td><input type="text" ng-model="user.LNames" /></td>
+	  	 </tr>
+	  	  <tr>
+	  	 	<td>Email</td>
+  	 		<td><input type="email" ng-model="user.Email" /></td>
+	  	 </tr>
+	  	  <tr>
+	  	 	<td>Phone</td>
+  	 		<td><input type="number" ng-model="user.phone" /></td>
+	  	 </tr>
+
+  	 		<tr>
+  	 			<td></td>
+  	 			<td>
+  	 				<button ng-click="add()">Add</button>
+  	 				<button ng-click="Update()">Save</button>
+  	 				<button ng-click="reset()">Reset</button>
+  	 			</td>
+  	 		</tr>
+  	 </table>
+  </form>
+  
+  	{{user}}
+  
+</div>
+
+
+<script>
+var app= angular
+			.module('myapp',[])
+           	.controller('myctrl', function($scope) {
+             $scope.user='';
+             
+             // default contact list
+
+            $scope.contacts = [
+                    
+                    { FNames: 'Ben',LNames:'Sare', Email: 'joeh.daniel@gmail.com',phone: 1234567890},
+                    { FNames: 'Sara',LNames:'Mark', Email: 'sara.Mark@gmail.com',phone: 234567890 },
+                    { FNames: 'Mark',LNames:'Pal', Email: 'mark.pal@gmail.com',phone: 345678912 },
+                    { FNames: 'Pam',LNames:'Den', Email: 'pam.den@gmail.com',phone: 7846786768 },
+                    { FNames: 'Todd',LNames:'Pun', Email: 'todd.pun@gmail.com',phone: 9877867576 },
+                    { FNames: 'joeh',LNames:'daniel', Email: 'joeh.daniel@gmail.com',phone: 571867479 }
+                      ];
+                
+
+               //add new contact
+	               // $scope.add=function()
+	               // {
+	               // 		$scope.contacts.push(
+	               // 			{ FNames:$scope.user.FNames, LNames:$scope.user.LNames,Email:$scope.user.Email,phone:$scope.user.phone}
+	               // 			);
+	               // 		$scope.user.FNames='';
+	               // 		$scope.user.LNames='';
+	               // 		$scope.user.Email='';
+	               // 		$scope.user.phone='';
+	               // }
+
+               //edit Contact
+	               	$scope.edit=function(e){
+	               		console.log(e);
+	               		$scope.user=angular.copy($scope.contacts[e]);
+	               		$scope.editID=e;
+	               	}
+               //Update  contact
+               		$scope.Update=function(){
+	               		$scope.contacts[$scope.editID].FNames=$scope.user.FNames;
+	               		$scope.contacts[$scope.editID].LNames=$scope.user.LNames;
+	               		$scope.contacts[$scope.editID].Email=$scope.user.Email;
+	               		$scope.contacts[$scope.editID].phone=$scope.user.phone;
+               		
+               }
+
+               //reset n
+
+	               $scope.reset=function(){
+	               	$scope.user="";
+	               }
+
+               //delete contact
+		               $scope.delete=function(a){
+		               	 console.log(a)
+		               	 $scope.contacts.splice(a,1);
+		               }
+
+               });      
+</script>
+
+</body>
+</html>
